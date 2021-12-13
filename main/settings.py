@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'rest_framework',
+    'logistic.apps.LogisticConfig',
+    'user_app.apps.UserAppConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -63,9 +67,12 @@ INTERNAL_IPS = ["127.0.0.1", "10.0.2.2"]
 
 ROOT_URLCONF = 'main.urls'
 
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        #'DIRS': [os.path.join(BASE_DIR, 'templates')],
         "DIRS": [os.path.dirname(os.path.abspath(__file__))],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -111,6 +118,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'user_app.CustomUser'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -155,3 +164,10 @@ MEDIA_URL = "/media/"
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
+# Session settings
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'panel'
+LOGOUT_REDIRECT_URL = 'login'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
