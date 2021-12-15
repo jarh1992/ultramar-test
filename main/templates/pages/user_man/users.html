@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} User management {% endblock %}
+{% block active-user-man %}class="active treeview"{% endblock %}
+{% block css %}
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{% static "bower_components/select2/dist/css/select2.min.css" %}">
+{% endblock %}
+{% block scripts %}
+    <!-- Select2 -->
+    <script src="{% static "bower_components/select2/dist/js/select2.full.min.js" %}"></script>
+    <script src="{% static "dist/js/scripts.js" %}"></script>
+{% endblock %}
+{% block type-body %}fixed{% endblock %}
+{% block body %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1> Profile </h1>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-md-7">
+                    {% include 'pages/user_man/boxes/boxU.html' %}
+                </div>
+            </div>
+
+            {% include 'pages/user_man/modals/modalDelU.html' %}
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+{% endblock %}

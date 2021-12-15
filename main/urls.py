@@ -17,14 +17,36 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import include
-from django.urls import path
-from .views import HomeView
+#from .views import HomeView
+
+from django.urls import path, re_path
+from django.views.generic.base import RedirectView
+from django.contrib.auth import views as auth_views
+from logistic import views
+from user_app import views as uv
+from user_app.views import UserView
 
 urlpatterns = [
+    re_path(r'^panel/', views.PanelView.as_view(), name='panel'),
+    re_path(r'^signup/$', uv.CustomUserCreationView.as_view(), name='signup'),
+    re_path(r'^login/$', auth_views.LoginView.as_view(), name='login'),
+    re_path(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
+    re_path(r'^$', RedirectView.as_view(url='login', permanent=False)),
+    path('user', UserView.as_view(), name='user'),
+    #path('apicon', views.ApiView.as_view(), name='apicon'),
+    path('password_change/',
+        auth_views.PasswordChangeView.as_view(template_name='pages/user_man/profile.html'),
+        name='password_change'),
+    path('password_change/done/',
+        auth_views.PasswordChangeDoneView.as_view(template_name='pages/user_man/profile.html'),
+        name='password_change_done'),
     path('admin/', admin.site.urls),
-    path("", HomeView.as_view(), name="HomeView"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
- 
+
+
+#urlpatterns = [
+#    path("", HomeView.as_view(), name="HomeView"),
+#]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)    

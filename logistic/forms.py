@@ -30,6 +30,7 @@ class VehicleChangeForm(Form):
     make = forms.CharField(max_length=50, required=True)
     model = forms.IntegerField(required=True)
     weight = forms.IntegerField(required=True)
+    booking = forms.ModelChoiceField(Booking.objects.all(), required=False)
 
 
 class BookingCreationForm(ModelForm):

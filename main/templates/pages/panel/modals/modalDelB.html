@@ -1,0 +1,13 @@
+{% extends 'base_modules/modals/baseModal.html' %}
+{% block modalClass %}modal-danger{% endblock %}
+{% block modalId %}DelB{% endblock %}
+{% block modalTitle %}Delete Booking{% endblock %}
+{% block modalBodyFooter %}
+    <div class="modal-body">
+        <p>Are you sure you want to delete the selected Booking(s)?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="deleteItem('boxB', {% url 'panel' %})">Delete</button>
+    </div>
+{% endblock %}

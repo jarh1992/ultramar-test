@@ -1,0 +1,38 @@
+{% extends 'base_modules/boxes/baseBox.html' %}
+{% block boxId %}V{% endblock %}
+{% block boxTitle %}Vehicles{% endblock %}
+{% block btnAddId %}AddV{% endblock %}
+{% block btnModId %}ModV{% endblock %}
+{% block btnDelId %}DelV{% endblock %}
+{% block modalAddId %}AddV{% endblock %}
+{% block modalModId %}ModV{% endblock %}
+{% block modalFlag %}1{% endblock %}
+{% block modalDelId %}DelV{% endblock %}
+{% block thead %}
+    <tr>
+        <th>
+            <input type="checkbox" id="headcheckboxv" name="headcheckbox"
+                   onclick="verifyHeadCheckbox('boxV', 'headcheckboxv', 'btnModV', 'btnDelV')"/>
+        </th>
+        <th>vin</th>
+        <th>make</th>
+        <th>model</th>
+        <th>weight</th>
+        <th>booking</th>
+    </tr>
+{% endblock %}
+{% block tbody %}
+    {% for v in vehicles %}
+        <tr>
+            <td>
+                <input name="{{ v.vin }}" type="checkbox" id="chck"
+                       onclick="verifyBodyCheckbox('boxV', 'headcheckboxv', 'btnModV', 'btnDelV')"/>
+            </td>
+            <td>{{ v.vin }}</td>
+            <td>{{ v.make }}</td>
+            <td>{{ v.model }}</td>
+            <td>{{ v.weight }}</td>
+            <td>{{ v.booking }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}

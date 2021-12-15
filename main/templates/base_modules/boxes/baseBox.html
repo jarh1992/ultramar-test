@@ -1,0 +1,39 @@
+<div class="box box-info" id="box{% block boxId %}{% endblock %}">
+    <div class="box-header">
+        <h3 class="box-title">{% block boxTitle %}{% endblock %}</h3>
+        <div class="box-tools">
+            <div class="btn-group-sm" style="width: 150px;">
+                <button id="btn{% block btnAddId %}{% endblock %}" type="button" class="btn btn-success"
+                        data-toggle="modal"
+                        data-target="#modal{% block modalAddId %}{% endblock %}">
+                    <i class="fa fa-plus"></i>
+                </button>
+                <button id="btn{% block btnModId %}{% endblock %}" type="button" class="btn btn-warning"
+                        onclick="actModModal('{% block modalModId %}{% endblock %}',
+                                {% block modalFlag %}{% endblock %})" disabled>
+                    <i class="fa fa-refresh"></i>
+                </button>
+                <button id="btn{% block btnDelId %}{% endblock %}" type="button" class="btn btn-danger"
+                        data-toggle="modal"
+                        data-target="#modal{% block modalDelId %}{% endblock %}" disabled>
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body table-responsive">
+        <table class="table table-hover" id="{% block t_id %}{% endblock %}">
+            <thead>
+            <tr>
+                {% block thead %}{% endblock %}
+            </tr>
+            </thead>
+            <tbody>
+            {% block tbody %}{% endblock %}
+            </tbody>
+        </table>
+    </div>
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->

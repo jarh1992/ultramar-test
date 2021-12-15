@@ -1,0 +1,17 @@
+{% extends 'base_modules/modals/baseModal.html' %}
+{% block modalClass %}modal-danger{% endblock %}
+{% block modalId %}DelU{% endblock %}
+{% block modalTitle %}Delete User{% endblock %}
+{% block modalBodyFooter %}
+    <div class="modal-body">
+        <p>Are you sure you want to delete your account?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <form action="{% url 'user' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="del" value="true">
+            <button type="submit" class="btn btn-primary">Delete</button>
+        </form>
+    </div>
+{% endblock %}

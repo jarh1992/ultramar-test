@@ -64,7 +64,6 @@ DEBUG_TOOLBAR_CONFIG = {
 # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#internal-ips
 INTERNAL_IPS = ["127.0.0.1", "10.0.2.2"]
 
-
 ROOT_URLCONF = 'main.urls'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -73,7 +72,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         #'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        "DIRS": [os.path.dirname(os.path.abspath(__file__))],
+        "DIRS": [os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

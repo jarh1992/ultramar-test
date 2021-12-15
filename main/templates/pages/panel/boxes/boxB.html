@@ -1,0 +1,38 @@
+{% extends 'base_modules/boxes/baseBox.html' %}
+{% block boxId %}B{% endblock %}
+{% block boxTitle %}Booking{% endblock %}
+{% block btnAddId %}AddB{% endblock %}
+{% block btnModId %}ModB{% endblock %}
+{% block btnDelId %}DelB{% endblock %}
+{% block modalAddId %}AddB{% endblock %}
+{% block modalModId %}ModB{% endblock %}
+{% block modalFlag %}1{% endblock %}
+{% block modalDelId %}DelB{% endblock %}
+{% block thead %}
+    <tr>
+        <th>
+            <input type="checkbox" id="headcheckboxb" name="headcheckbox"
+                   onclick="verifyHeadCheckbox('boxB', 'headcheckboxb', 'btnModB', 'btnDelB')"/>
+        </th>
+        <th>booking_num</th>
+        <th>loading_port</th>
+        <th>discharge_port</th>
+        <th>ship_arr_date</th>
+        <th>ship_dep_date</th>
+    </tr>
+{% endblock %}
+{% block tbody %}
+    {% for b in bookings %}
+        <tr>
+            <td>
+                <input name="{{ b.booking_num }}" type="checkbox" id="chck"
+                       onclick="verifyBodyCheckbox('boxB', 'headcheckboxb', 'btnModB', 'btnDelB')"/>
+            </td>
+            <td>{{ b.booking_num }}</td>
+            <td>{{ b.loading_port }}</td>
+            <td>{{ b.discharge_port }}</td>
+            <td>{{ b.ship_arr_date }}</td>
+            <td>{{ b.ship_dep_date }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
