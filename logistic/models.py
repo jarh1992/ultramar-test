@@ -17,7 +17,14 @@ class Vehicle(models.Model):
     make = models.CharField('Make', null=False, blank=False, max_length=50)
     model = models.IntegerField('Model', null=False, blank=False)
     weight = models.IntegerField('Weight', null=False, blank=False)
-    booking = models.ForeignKey(Booking, on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return str(self.vin)
+
+
+class Transport(models.Model):
+    booking = models.ForeignKey(Booking, on_delete=models.SET_NULL, blank=True, null=True)
+    vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.id)
