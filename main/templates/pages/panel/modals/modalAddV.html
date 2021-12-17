@@ -10,7 +10,7 @@
         <div class="modal-body">
             {{ forms.create_vehicle_form | crispy }}
 
-            <div id="div_id_booking" class="form-group">
+            {% comment %}<div id="div_id_booking" class="form-group">
                 <label for="id_booking" class="control-label  requiredField">
                     Booking assignation
                 </label>
@@ -22,7 +22,7 @@
                         {% endfor %}
                     </select>
                 </div>
-            </div>
+            </div>{% endcomment %}
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>

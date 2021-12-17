@@ -1,16 +1,19 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.template.response import TemplateResponse
-from django.views.generic import TemplateView, ListView
+from django.http import HttpResponse
 from .multiForm import MultiFormsView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from .forms import (BookingCreationForm,
-    BookingChangeForm,
-    VehicleCreationForm,
-    VehicleChangeForm,)
+                    BookingChangeForm,
+                    VehicleCreationForm,
+                    VehicleChangeForm)
 from .models import Booking, Vehicle, Transport
 from datetime import datetime
 import json
+import pandas as pd
+from django.forms.models import model_to_dict
+import mimetypes
+from main.settings import APPS_DIR
 
 
 class PanelView(LoginRequiredMixin, MultiFormsView):
@@ -47,16 +50,16 @@ class PanelView(LoginRequiredMixin, MultiFormsView):
         return redirect('panel')
 
     def create_vehicle_form_form_valid(self, form):
-        booking_num = int(self.request.POST.get('booking'))
-        booking = Booking.objects.get(id=booking_num)
-        if self.request.POST.get('vin') != '---':
+        form.save(self.request)
+        if self.request.POST.get('booking') != '---':
+            booking_num = int(self.request.POST.get('booking'))
+            booking = Booking.objects.get(id=booking_num)
             vin = int(self.request.POST.get('vin'))
             transport = Transport(
                 booking=booking,
                 vehicle=Vehicle.objects.get(vin=vin)
             )
             transport.save()
-        form.save(self.request)
         return redirect('panel')
 
     def modify_booking_form_form_valid(self, form):
@@ -78,5 +81,28 @@ class PanelView(LoginRequiredMixin, MultiFormsView):
         vehicle.make = self.request.POST.get("m-make")
         vehicle.model = self.request.POST.get("m-model")
         vehicle.weight = self.request.POST.get("m-weight")
+        booking_num = int(self.request.POST.get('booking'))
+        booking = Booking.objects.get(id=booking_num)
         vehicle.save()
         return redirect('panel')
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.POST.get('actn_button') == 'Export Excel':
+            transports = Transport.objects.all()
+            rows = []
+            for t in transports:
+                booking = model_to_dict(t.booking)
+                del booking['id']
+                vehicle = model_to_dict(t.vehicle)
+                del vehicle['id']
+                rows.append({**booking, **vehicle})
+            df = pd.DataFrame(rows)
+            media_path = APPS_DIR+"/media/"
+            filename = 'transports.xlsx'
+            df.to_excel(media_path + filename, engine='xlsxwriter', encoding="UTF-8")
+            with open(media_path + filename, 'rb') as file:
+                mime_type, _ = mimetypes.guess_type(media_path + filename)
+                response = HttpResponse(file, content_type=mime_type)
+                response['Content-Disposition'] = f"attachment; filename={filename}"
+                return response
+        return super(PanelView, self).dispatch(request, *args, **kwargs)

@@ -4,6 +4,10 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body table-responsive">
+        <form method="post" action="{% url 'panel' %}">
+            {% csrf_token %}
+            <input type="submit" name="actn_button" class="btn btn-info pull-left" value="{% block btnProporsal %}{% endblock %}">
+        </form>
         <table class="table table-hover" id="{% block t_id %}{% endblock %}">
             <thead>
             <tr>

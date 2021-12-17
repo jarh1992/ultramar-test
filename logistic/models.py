@@ -24,7 +24,7 @@ class Vehicle(models.Model):
 
 class Transport(models.Model):
     booking = models.ForeignKey(Booking, on_delete=models.SET_NULL, blank=True, null=True)
-    vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, blank=True, null=True)
+    vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, blank=True, null=True, unique=True)
 
     def __str__(self):
         return str(self.id)

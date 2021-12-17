@@ -8,6 +8,7 @@ class VehicleCreationForm(ModelForm):
     """
     Formulario para creacion de Vehicles
     """
+    booking = forms.ModelChoiceField(Booking.objects.all(), required=False)
 
     class Meta:
         model = Vehicle

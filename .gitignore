@@ -13,5 +13,6 @@ htmlcov/
 
 build/
 *.egg-info/
+main/media/*
 
 db.sqlite3
