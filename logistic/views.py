@@ -8,7 +8,7 @@ from .forms import (BookingCreationForm,
     BookingChangeForm,
     VehicleCreationForm,
     VehicleChangeForm,)
-from .models import Booking, Vehicle
+from .models import Booking, Vehicle, Transport
 from datetime import datetime
 import json
 
@@ -39,6 +39,7 @@ class PanelView(LoginRequiredMixin, MultiFormsView):
                     Vehicle.objects.get(vin=int(i)).delete()
         context['bookings'] = Booking.objects.all()
         context['vehicles'] = Vehicle.objects.all()
+        context['transports'] = Transport.objects.all()
         return context
 
     def create_booking_form_form_valid(self, form):
@@ -46,6 +47,15 @@ class PanelView(LoginRequiredMixin, MultiFormsView):
         return redirect('panel')
 
     def create_vehicle_form_form_valid(self, form):
+        booking_num = int(self.request.POST.get('booking'))
+        booking = Booking.objects.get(id=booking_num)
+        if self.request.POST.get('vin') != '---':
+            vin = int(self.request.POST.get('vin'))
+            transport = Transport(
+                booking=booking,
+                vehicle=Vehicle.objects.get(vin=vin)
+            )
+            transport.save()
         form.save(self.request)
         return redirect('panel')
 
@@ -68,8 +78,5 @@ class PanelView(LoginRequiredMixin, MultiFormsView):
         vehicle.make = self.request.POST.get("m-make")
         vehicle.model = self.request.POST.get("m-model")
         vehicle.weight = self.request.POST.get("m-weight")
-        booking_num = self.request.POST.get("m-booking")
-        booking = Booking.objects.get(id=booking_num)
-        vehicle.booking = booking
         vehicle.save()
         return redirect('panel')

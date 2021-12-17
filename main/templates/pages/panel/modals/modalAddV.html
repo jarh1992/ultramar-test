@@ -9,6 +9,20 @@
         <input type="hidden" name="next" value="{{ next }}">
         <div class="modal-body">
             {{ forms.create_vehicle_form | crispy }}
+
+            <div id="div_id_booking" class="form-group">
+                <label for="id_booking" class="control-label  requiredField">
+                    Booking assignation
+                </label>
+                <div class="controls ">
+                    <select name="booking" id="id_booking" class="form-control">
+                        <option value="---" selected>---</option>
+                        {% for b in bookings %}
+                            <option value="{{ b.id }}" >{{ b.booking_num }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>

@@ -1,0 +1,17 @@
+{% extends 'base_modules/boxes/baseBox2.html' %}
+{% block boxId %}T{% endblock %}
+{% block boxTitle %}All transports{% endblock %}
+{% block thead %}
+    <tr>
+        <th>Booking</th>
+        <th>Vehicle</th>
+    </tr>
+{% endblock %}
+{% block tbody %}
+    {% for t in transports %}
+        <tr>
+            <td>{{ t.booking }}</td>
+            <td>{{ t.vehicle }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
